@@ -2,7 +2,22 @@ import java.math.BigInteger;
 import java.util.Random;
 
 public class EvaluatePolynomial {
-    //Horner's Rule
+    //Brute Force Method
+    static BigInteger bruteForce(BigInteger[] coefArr, BigInteger n, BigInteger x) {
+        //Initialize Result
+        BigInteger exp = n;
+        BigInteger result = coefArr[0].multiply(x.pow(n.intValue()));
+
+        //Evaluate using the Brute Force Method
+        for (int i=1; i<n.intValue()+1; i++) {
+            exp = exp.subtract(BigInteger.ONE);
+            result = result.add(coefArr[i].multiply(x.pow(exp.intValue())));
+        }
+        return result;
+    }
+
+
+    //Horner's Rule Method
     static BigInteger hornersRule(BigInteger[] coefArr, BigInteger n, BigInteger x) {
         //Initialize Result
         BigInteger result = coefArr[0];
@@ -17,26 +32,35 @@ public class EvaluatePolynomial {
     // Main Method
     public static void main (String[] args) {
         // n = degree of polynomial
-        String degreePoly = "3";
+        String degreePoly = "10";
         BigInteger n = new BigInteger(degreePoly);
 
         // d = the number of digits for the coefficients of the polynomial and the variable x
         Random rnd = new Random();
         int d = 6;
 
-        BigInteger x = new BigInteger("3"); //BigInteger(d, rnd);
+        BigInteger x = new BigInteger(d, rnd);
 
         //Coefficient Array
-        BigInteger coef = new BigInteger("5"); //BigInteger(d, rnd);
-        BigInteger num = coef;
+        //BigInteger coef = new BigInteger(d, rnd);
+        //BigInteger num = coef;
         BigInteger[] coefArr = new BigInteger[n.intValue() + 1];
         // fill the array
         for(int i=0; i<n.intValue()+1; i++) {
-            coefArr[i] = num;
-            num = num.subtract(BigInteger.ONE);
+            coefArr[i] = new BigInteger(d, rnd);
+            //num = num.subtract(BigInteger.ONE);
         }
 
+        // Find response times for both methods
+            //Brute force response time
+            long BFstartTime = System.currentTimeMillis();
+                BigInteger bruteForceValue = bruteForce(coefArr, n, x);
+            long BFendTime = System.currentTimeMillis();
 
+            //Horner's Rule response time
+            long HRstartTime = System.currentTimeMillis();
+                BigInteger hornersValue = hornersRule(coefArr, n, x);
+            long HRendTime = System.currentTimeMillis();
 
         //Display detail on polynomial
         System.out.println("->Details of Polynomial:");
@@ -54,10 +78,10 @@ public class EvaluatePolynomial {
         System.out.println("\n->Results of Polynomials using Brute Force and Horner's Rule:");
 
             //Brute Force result
-            System.out.println("Value of Polynomial using Brute Force Method = ");
+            System.out.println("Value of Polynomial using Brute Force Method = "  + bruteForceValue);
 
             //Horner's Rule Result
-            System.out.println("Value of Polynomial using Horner's Rule Method = " + hornersRule(coefArr, n, x));
+            System.out.println("Value of Polynomial using Horner's Rule Method = " + hornersValue);
         System.out.println("------------------------------------------------------------------------");
         System.out.println();
 
@@ -65,10 +89,10 @@ public class EvaluatePolynomial {
         System.out.println("->Response time of Polynomials using Brute Force and Horner's Rule:");
 
             //Brute force Response time
-            System.out.println("Response Time using Brute Force Method = ");
+            System.out.println("Response Time using Brute Force Method = " + (BFendTime - BFstartTime) + " milliseconds");
 
             //Horner's Rule Response time (Should be must faster)
-            System.out.println("Response Time using Horner's Rule Method = ");
+            System.out.println("Response Time using Horner's Rule Method = " + (HRendTime - HRstartTime) + " milliseconds");
         System.out.println("------------------------------------------------------------------------");
     }
 }
