@@ -32,24 +32,23 @@ public class EvaluatePolynomial {
     // Main Method
     public static void main (String[] args) {
         // n = degree of polynomial
-        String degreePoly = "10";
+        String degreePoly = "27000";
         BigInteger n = new BigInteger(degreePoly);
 
-        // d = the number of digits for the coefficients of the polynomial and the variable x
+        // d = the number of bits for the coefficients of the polynomial and the variable x
         Random rnd = new Random();
-        int d = 6;
+        int d = 12;
 
+        // random x
         BigInteger x = new BigInteger(d, rnd);
 
         //Coefficient Array
-        //BigInteger coef = new BigInteger(d, rnd);
-        //BigInteger num = coef;
         BigInteger[] coefArr = new BigInteger[n.intValue() + 1];
-        // fill the array
-        for(int i=0; i<n.intValue()+1; i++) {
-            coefArr[i] = new BigInteger(d, rnd);
-            //num = num.subtract(BigInteger.ONE);
-        }
+            // fill the array
+            for(int i=0; i<n.intValue()+1; i++) {
+                coefArr[i] = new BigInteger(d, rnd);
+                //num = num.subtract(BigInteger.ONE);
+            }
 
         // Find response times for both methods
             //Brute force response time
@@ -89,10 +88,10 @@ public class EvaluatePolynomial {
         System.out.println("->Response time of Polynomials using Brute Force and Horner's Rule:");
 
             //Brute force Response time
-            System.out.println("Response Time using Brute Force Method = " + (BFendTime - BFstartTime) + " milliseconds");
+            System.out.println("Response Time using Brute Force Method = " + (BFendTime - BFstartTime) + " milliseconds = " + ((BFendTime - BFstartTime) / 1000) + " seconds");
 
             //Horner's Rule Response time (Should be must faster)
-            System.out.println("Response Time using Horner's Rule Method = " + (HRendTime - HRstartTime) + " milliseconds");
+            System.out.println("Response Time using Horner's Rule Method = " + (HRendTime - HRstartTime) + " milliseconds = " + ((HRendTime - HRstartTime) / 1000) + " seconds");
         System.out.println("------------------------------------------------------------------------");
     }
 }
